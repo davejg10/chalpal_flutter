@@ -1,5 +1,5 @@
 name: Unit test - PR
-run-name: (PR - ${{ env.{ github.head_ref  }} }} -> ${{ env.{ github.base_ref  }} }}) - Unit testing
+run-name: (PR - ${{ github.head_ref  }} -> ${{ github.base_ref  }} ) - Unit testing
 
 on:
   workflow_dispatch:
