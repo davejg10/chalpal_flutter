@@ -76,3 +76,6 @@ jobs:
 
       - name: flutter doctor
         run: flutter doctor -v
+
+      - name: flutter test
+        run: flutter test --machine integration_test\
