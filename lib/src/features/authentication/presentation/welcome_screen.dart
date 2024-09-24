@@ -1,18 +1,19 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:chal_pal/src/global/widgets/navigation_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../global/constants.dart';
 import 'login_screen.dart';
 import 'register_screen.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends ConsumerWidget {
   const WelcomeScreen({super.key});
 
   static String route = "/";
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -47,8 +48,8 @@ class WelcomeScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    NavigationButton(buttonText: 'Register', onPressed: () => Navigator.pushNamed(context, RegisterScreen.route)),
-                    NavigationButton(buttonText: 'Login', onPressed: () => Navigator.pushNamed(context, LoginScreen.route)),
+                    Flexible(child: NavigationButton(key: const Key('welcome_register'), buttonText: 'Register', onPressed: () => Navigator.pushNamed(context, RegisterScreen.route))),
+                    Flexible(child: NavigationButton(key: const Key('welcome_login'), buttonText: 'Login', onPressed: () => Navigator.pushNamed(context, LoginScreen.route))),
                   ],
                 ),
               ),

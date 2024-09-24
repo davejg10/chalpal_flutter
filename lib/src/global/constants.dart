@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// The localhost Java backend
+String backendUri = 'http://10.0.2.2:8080';
 
 const kGreyBackgroundColor = Color(0xFFEBEFF6);
 const kBlueBackgroundColor = Color(0xFF3B72F5);
@@ -32,3 +34,5 @@ const kInputTextDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
+
+
