@@ -31,7 +31,7 @@ jobs:
   pr-integration-testing:
 #    needs: pr-unit-testing
     runs-on: ubuntu-latest
-    container: cirrusci/flutter:3.7.8
+    container: docker pull ghcr.io/cirruslabs/flutter:stable
     #    container: ghcr.io/cirruslabs/flutter:latest
     env:
       apiLevel: "27"
