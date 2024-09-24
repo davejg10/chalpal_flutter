@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/cirruslabs/flutter:stable
     env:
-      apiLevel: "27"
+      apiLevel: "35"
       target: "google_apis"
       arch: "x86"
       deviceName: "android_emulator"
