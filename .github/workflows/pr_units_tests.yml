@@ -42,7 +42,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install project dependencies
-        run: flutter pub get
+        run: |
+          ls
+          flutter pub get
 
       - name: Install emulator
         run: |
@@ -78,4 +80,7 @@ jobs:
         run: flutter doctor -v
 
       - name: flutter test
-        run: flutter test --machine integration_test\
+        run: |
+          ls
+          flutter test --machine integration_test
+          
