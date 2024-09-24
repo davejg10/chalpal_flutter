@@ -8,7 +8,8 @@ on:
 
 jobs:
   pr-unit-testing:
-    runs-on: ghcr.io/cirruslabs/flutter:latest
+    runs-on: ubuntu-latest
+    container: ghcr.io/cirruslabs/flutter:latest
     steps:
       - uses: actions/checkout@v4
 
@@ -35,7 +36,8 @@ jobs:
 
   pr-integration-testing:
     needs: pr-unit-testing
-    runs-on: ghcr.io/cirruslabs/flutter:latest
+    runs-on: ubuntu-latest
+    container: ghcr.io/cirruslabs/flutter:latest
     steps:
       - uses: actions/checkout@v4
 
