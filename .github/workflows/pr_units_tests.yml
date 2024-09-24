@@ -32,6 +32,12 @@ jobs:
 #    needs: pr-unit-testing
     runs-on: ubuntu-latest
 #    container: ghcr.io/cirruslabs/flutter:latest
+    env:
+      apiLevel: "27"
+      target: "google_apis"
+      arch: "x86"
+      deviceName: "android_emulator"
+      deviceType: "pixel"
     steps:
       - uses: actions/checkout@v4
 
@@ -43,26 +49,19 @@ jobs:
 #      - name: Install dependencies
 #        run: flutter pub get
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'oracle'
-          cache: gradle
-
-      - name: Enable KVM
+      - name: Install emulator
         run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
+          - sdkmanager "platform-tools" "platforms;android-${apiLevel}"
+          - sdkmanager --install "system-images;android-${apiLevel};${target}${arch}"
+          - sdkmanager --update
+          - echo "y" | sdkmanager --licenses
+          - sdkmanager --list
+          - echo "no" | avdmanager -v create avd --force --name "${deviceName}" --package "system-images;android-${apiLevel};${target};${arch}" --tag "${target}" --sdcard 128M --device "${deviceType}"
+          - emulator -avd "${deviceName}" -no-audio -no-window -no-snapstorage -no-snapshot -gpu swiftshader_indirect -no-boot-anim -no-accel -wipe-data -skip-adb-auth &
+          - adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
+          - flutter doctor -v
+        
+        
 
-      - name: run tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          arch: x86_64
-          profile: Nexus 6
-          script: ./gradlew connectedCheck
-
-      - name: Check connectivity to emulator
-        run: flutter doctor -v
+#      - name: Check connectivity to emulator
+#        run: flutter doctor -v
