@@ -41,17 +41,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Flutter SDK
-        uses: flutter-actions/setup-flutter@v3
-        with:
-          channel: stable
-          version: 3.24.1
+#      - name: Setup Flutter SDK
+#        uses: flutter-actions/setup-flutter@v3
+#        with:
+#          channel: stable
+#          version: 3.24.1
+
 #      - name: Install dependencies
 #        run: flutter pub get
 
       - name: Install emulator
-        run: |
-          - sdkmanager
+        run: sdkmanager
 #          - sdkmanager "platform-tools" "platforms;android-${{ env.apiLevel }}"
 #          - sdkmanager --install "system-images;android-${{ env.apiLevel }};${{ env.target }}${{ env.arch }}"
 #          - sdkmanager --update
