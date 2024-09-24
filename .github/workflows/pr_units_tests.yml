@@ -55,7 +55,7 @@ jobs:
           emulator -list-avds
           emulator -avd "${{ env.deviceName }}" -no-audio -no-window -no-snapstorage -no-snapshot -gpu swiftshader_indirect -no-boot-anim -no-accel -wipe-data -skip-adb-auth &
           echo 'here'
-          adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; echo exit'
+#          adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; echo exit'
           flutter doctor -v
         
         
