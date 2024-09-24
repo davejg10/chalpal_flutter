@@ -35,19 +35,19 @@ jobs:
     env:
       apiLevel: "35"
       target: "google_apis"
-      arch: "x86"
+      arch: "x86_64"
       deviceName: "android_emulator"
       deviceType: "pixel"
     steps:
       - uses: actions/checkout@v4
 
-#      - name: Install dependencies
+#      - name: Install project dependencies
 #        run: flutter pub get
 
       - name: Install emulator
         run: |
           sdkmanager "platform-tools" "platforms;android-${{ env.apiLevel }}"
-          sdkmanager --install "system-images;android-${{ env.apiLevel }};${{ env.target }}${{ env.arch }}"
+          sdkmanager --install "system-images;android-${{ env.apiLevel }};${{ env.target }};${{ env.arch }}"
           sdkmanager --update
           echo "y" | sdkmanager --licenses
           sdkmanager --list
