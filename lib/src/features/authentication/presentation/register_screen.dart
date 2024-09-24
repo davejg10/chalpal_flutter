@@ -1,4 +1,5 @@
 import 'package:chal_pal/src/global/widgets/navigation_button.dart';
+import 'package:chal_pal/src/global/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
@@ -6,33 +7,37 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../../../main.dart';
 import '../../../global/constants.dart';
-import '../controller/registration_screen_controller.dart';
-import '../providers.dart';
+import '../providers/registration_provider.dart';
 import 'login_screen.dart';
 
 
 class RegisterScreen extends ConsumerWidget {
-  Logger logger = getLogger('register_screen.dart');
+  RegisterScreen({super.key});
 
+  Logger logger = getLogger('register_screen.dart');
   static String route = "register";
-  late String email;
+  String email = "";
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final messageTextController = TextEditingController();
 
     ref.listen<AsyncValue>(
-      registrationScreenControllerProvider,
+      registrationNotifierProvider,
       (_, state) {
         return state.showSnackbarOnError(context, logger);
       },
     );
 
-    final AsyncValue<void> registerState = ref.watch(registrationScreenControllerProvider);
+    final registrationState = ref.watch(registrationNotifierProvider);
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Register screen'),
+        backgroundColor: Colors.white,
+      ),
       body: ModalProgressHUD(
-        inAsyncCall: registerState.isLoading,
+        inAsyncCall: registrationState.isLoading,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.0),
           child: Center(
@@ -51,6 +56,7 @@ class RegisterScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     TextField(
+                      key: const Key('register_email_field'),
                       controller: messageTextController,
                       keyboardType: TextInputType.emailAddress,
                       textAlign: TextAlign.center,
@@ -63,11 +69,18 @@ class RegisterScreen extends ConsumerWidget {
                       height: 32.0,
                     ),
                     NavigationButton(
+                      key: const Key('register_button'),
                       buttonText: 'Register',
-                      onPressed: registerState.isLoading ? null : () async {
+                      onPressed: registrationState.isLoading ? null : () async {
+
+                        if (email.trim().isEmpty) {
+                          showSnackbar(context, 'The email field cannot be empty.', true);
+                          return;
+                        }
+
                         messageTextController.clear();
-                        await ref.read(registrationScreenControllerProvider.notifier).register(email);
-                        if (!registerState.hasError) {
+                        await ref.read(registrationNotifierProvider.notifier).registerUser(email);
+                        if (!ref.read(registrationNotifierProvider).hasError) {
                           Navigator.pushNamed(context, LoginScreen.route);
                         }
                       },

@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';
-// Since our class is serializable we must add this part too for additional code generation.
+// Since our class is serializable we must add this part for additional code generation.
 part 'user.g.dart';
 
 @freezed

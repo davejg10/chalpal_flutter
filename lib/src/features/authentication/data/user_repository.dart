@@ -15,7 +15,27 @@ class UserRepository {
 
   Logger _logger = getLogger('user_repository.dart');
 
-  Future<User> register({required String email}) async {
+  Future<User> loginUser({required String email}) async {
+    final response = await httpClient.get(Uri.parse(backendUri + '/users/${email}'));
+
+    switch (response.statusCode) {
+      case 200:
+        _logger.i('${response.statusCode} - [Reponse]: ${response.body}');
+        final user = jsonDecode(response.body);
+        return User.fromJson(user);
+      case 404:
+        _logger.e('${response.statusCode} - [Reponse]: ${response.body}');
+        throw UserNotFoundException(response.body);
+      case 400:
+        _logger.e('${response.statusCode} - [Reponse]: ${response.body}');
+        throw ClientNullRequestException(response.body);
+      default:
+        _logger.e('${response.statusCode} - [Reponse]: ${response.body}');
+        throw UnknownException();
+    }
+  }
+
+  Future<User> registerUser({required String email}) async {
     Map<String, dynamic> newUser = User.toJsonForRegistration(email);
     final response = await httpClient.post(Uri.parse(backendUri + '/users'), headers: {"Content-Type": "application/json"}, body: jsonEncode(newUser));
 
@@ -27,26 +47,6 @@ class UserRepository {
       case 409:
         _logger.e('${response.statusCode} - [Reponse]: ${response.body}');
         throw UserAlreadyExistException(response.body);
-      case 400:
-        _logger.e('${response.statusCode} - [Reponse]: ${response.body}');
-        throw ClientNullRequestException(response.body);
-      default:
-        _logger.e('${response.statusCode} - [Reponse]: ${response.body}');
-        throw UnknownException();
-    }
-  }
-
-  Future<User> login({required String email}) async {
-    final response = await httpClient.get(Uri.parse(backendUri + '/users/${email}'));
-
-    switch (response.statusCode) {
-      case 200:
-        _logger.i('${response.statusCode} - [Reponse]: ${response.body}');
-        final user = jsonDecode(response.body);
-        return User.fromJson(user);
-      case 404:
-        _logger.e('${response.statusCode} - [Reponse]: ${response.body}');
-        throw UserNotFoundException(response.body);
       case 400:
         _logger.e('${response.statusCode} - [Reponse]: ${response.body}');
         throw ClientNullRequestException(response.body);
