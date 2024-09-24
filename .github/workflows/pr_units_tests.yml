@@ -31,7 +31,8 @@ jobs:
   pr-integration-testing:
 #    needs: pr-unit-testing
     runs-on: ubuntu-latest
-#    container: ghcr.io/cirruslabs/flutter:latest
+    container: cirrusci/flutter:3.7.8
+    #    container: ghcr.io/cirruslabs/flutter:latest
     env:
       apiLevel: "27"
       target: "google_apis"
