@@ -34,6 +34,7 @@ jobs:
           path: tests/json
 
   pr-integration-testing:
+    needs: pr-unit-testing
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
