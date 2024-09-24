@@ -50,8 +50,9 @@ jobs:
           sdkmanager --install "system-images;android-${{ env.apiLevel }};${{ env.target }};${{ env.arch }}"
           sdkmanager --update
           echo "y" | sdkmanager --licenses
-          echo "no" | avdmanager -v create avd --force --name "${{ env.deviceName }}" --package "system-images;android-${{ env.apiLevel }};${{ env.target }};${{ env.arch }}" --tag "${{ env.target }}" --sdcard 128M --device "${{ env.deviceType }}"
-          sleep 10
+
+      - name: create avd
+        run: echo "no" | avdmanager -v create avd --force --name "${{ env.deviceName }}" --package "system-images;android-${{ env.apiLevel }};${{ env.target }};${{ env.arch }}" --tag "${{ env.target }}" --sdcard 128M --device "${{ env.deviceType }}"
 
       - name: list emulators
         run: |
