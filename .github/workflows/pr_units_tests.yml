@@ -31,7 +31,7 @@ jobs:
   pr-integration-testing:
 #    needs: pr-unit-testing
     runs-on: ubuntu-latest
-    container: ghcr.io/cirruslabs/flutter:latest
+    container: ghcr.io/cirruslabs/flutter:stable
     env:
       apiLevel: "27"
       target: "google_apis"
@@ -41,26 +41,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-#      - name: Setup Flutter SDK
-#        uses: flutter-actions/setup-flutter@v3
-#        with:
-#          channel: stable
-#          version: 3.24.1
-
 #      - name: Install dependencies
 #        run: flutter pub get
 
       - name: Install emulator
-        run: sdkmanager
-#          - sdkmanager "platform-tools" "platforms;android-${{ env.apiLevel }}"
-#          - sdkmanager --install "system-images;android-${{ env.apiLevel }};${{ env.target }}${{ env.arch }}"
-#          - sdkmanager --update
-#          - echo "y" | sdkmanager --licenses
-#          - sdkmanager --list
-#          - echo "no" | avdmanager -v create avd --force --name "${{ env.deviceName }}" --package "system-images;android-${{ env.apiLevel }};${{ env.target }};${{ env.arch }}" --tag "${{ env.target }}" --sdcard 128M --device "${{ env.deviceType }}"
-#          - emulator -avd "${{ env.deviceName }}" -no-audio -no-window -no-snapstorage -no-snapshot -gpu swiftshader_indirect -no-boot-anim -no-accel -wipe-data -skip-adb-auth &
-#          - adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
-#          - flutter doctor -v
+        run:
+          sdkmanager "platform-tools" "platforms;android-${{ env.apiLevel }}"
+          sdkmanager --install "system-images;android-${{ env.apiLevel }};${{ env.target }}${{ env.arch }}"
+          sdkmanager --update
+          echo "y" | sdkmanager --licenses
+          sdkmanager --list
+          echo "no" | avdmanager -v create avd --force --name "${{ env.deviceName }}" --package "system-images;android-${{ env.apiLevel }};${{ env.target }};${{ env.arch }}" --tag "${{ env.target }}" --sdcard 128M --device "${{ env.deviceType }}"
+          emulator -avd "${{ env.deviceName }}" -no-audio -no-window -no-snapstorage -no-snapshot -gpu swiftshader_indirect -no-boot-anim -no-accel -wipe-data -skip-adb-auth &
+          adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
+          flutter doctor -v
         
         
 
