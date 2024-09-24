@@ -45,7 +45,7 @@ jobs:
 #        run: flutter pub get
 
       - name: Install emulator
-        run:
+        run: |
           sdkmanager "platform-tools" "platforms;android-${{ env.apiLevel }}"
           sdkmanager --install "system-images;android-${{ env.apiLevel }};${{ env.target }}${{ env.arch }}"
           sdkmanager --update
