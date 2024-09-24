@@ -16,7 +16,7 @@ void main() {
     registerFallbackValue(MockUri());
   });
 
-  group('loginUser', () {
+  group('(group: loginUser) -', () {
     final client = MockClient();
     String newUserEmail = "existinguser@email.com";
     UserRepository userRepository = UserRepository(client, 'somebackendurl');
@@ -49,7 +49,7 @@ void main() {
     });
   });
 
-  group('registerUser', () {
+  group('(group: registerUser) -', () {
     final client = MockClient();
     String newUserEmail = "existinguser@email.com";
     UserRepository userRepository = UserRepository(client, 'somebackendurl');

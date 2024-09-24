@@ -12,6 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+#        // run dart build runner
+
       - name: Setup Flutter SDK
         uses: flutter-actions/setup-flutter@v3
         with:
@@ -20,3 +22,13 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+
+      - name: Run Unit Tests
+        run: flutter test --file-reporter "json:tests/json"
+
+      - name: Archive test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results
+          path: tests/json

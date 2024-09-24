@@ -10,16 +10,16 @@ import 'package:mockito/annotations.dart';
 // Generate a MockClient using the Mockito package.
 @GenerateMocks([http.Client])
 //Import generated mocks
-import 'user_repository_test_mockito.mocks.dart';
+import 'user_repository_mockito_test.mocks.dart';
 
 void main() {
 
-  group('loginUser', () {
+  group('(group: loginUser) -', () {
     final client = MockClient();
     String newUserEmail = "existinguser@email.com";
     UserRepository userRepository = UserRepository(client, 'somebackendurl');
 
-    test("loginUser should return User when response code is 200", () async {
+    test("should return User when response code is 200", () async {
 
       when(client.get(any)
       ).thenAnswer((_) async => http.Response('{ "id": 1, "email": "${newUserEmail}" }', 200));
@@ -27,19 +27,19 @@ void main() {
       expect(await userRepository.loginUser(email: newUserEmail), isA<User>());
     });
 
-    test("loginUser should throw UserNotFoundException when response code is 404", () async {
+    test("should throw UserNotFoundException when response code is 404", () async {
       when(client.get(any)
       ).thenAnswer((_) async => http.Response('', 404));
 
       expect(() => userRepository.loginUser(email: newUserEmail), throwsA(isA<UserNotFoundException>()));
     });
-    test("loginUser should throw ClientNullRequestException when response code is 400", () async {
+    test("should throw ClientNullRequestException when response code is 400", () async {
       when(client.get(any)
       ).thenAnswer((_) async => http.Response('', 400));
 
       expect(() => userRepository.loginUser(email: newUserEmail), throwsA(isA<ClientNullRequestException>()));
     });
-    test("loginUser should throw UnknownException when response code is not 400,404,200", () async {
+    test("should throw UnknownException when response code is not 400,404,200", () async {
       when(client.get(any)
       ).thenAnswer((_) async => http.Response('', 299));
 
@@ -47,12 +47,12 @@ void main() {
     });
   });
 
-  group('registerUser', () {
+  group('(group: registerUser) - ', () {
     final client = MockClient();
     String newUserEmail = "existinguser@email.com";
     UserRepository userRepository = UserRepository(client, 'somebackendurl');
 
-    test("registerUser should return User when response code is 201", () async {
+    test("should return User when response code is 201", () async {
 
       when(client.post(
         any,
@@ -63,7 +63,7 @@ void main() {
       expect(await userRepository.registerUser(email: newUserEmail), isA<User>());
     });
 
-    test("registerUser should throw UserAlreadyExistException when response code is 409", () async {
+    test("should throw UserAlreadyExistException when response code is 409", () async {
       when(client.post(
         any,
         headers: anyNamed('headers'),
@@ -72,7 +72,7 @@ void main() {
 
       expect(() => userRepository.registerUser(email: newUserEmail), throwsA(isA<UserAlreadyExistException>()));
     });
-    test("registerUser should throw ClientNullRequestException when response code is 400", () async {
+    test("should throw ClientNullRequestException when response code is 400", () async {
       when(client.post(
         any,
         headers: anyNamed('headers'),
@@ -81,7 +81,7 @@ void main() {
 
       expect(() => userRepository.registerUser(email: newUserEmail), throwsA(isA<ClientNullRequestException>()));
     });
-    test("registerUser should throw UnknownException when response code is not 400,409,201", () async {
+    test("should throw UnknownException when response code is not 400,409,201", () async {
       when(client.post(
         any,
         headers: anyNamed('headers'),

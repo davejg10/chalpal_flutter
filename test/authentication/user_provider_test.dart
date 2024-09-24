@@ -26,7 +26,7 @@ void main() {
     registerFallbackValue(AsyncError<User?>('some error', StackTrace.current));
   });
 
-  group('loginUser', () {
+  group('(group: loginUser) -', () {
 
     test('userNotifier initial state is AsyncData(null)', () {
       // Creates a container containing all of our providers
@@ -51,7 +51,7 @@ void main() {
       verifyNoMoreInteractions(listener);
     });
 
-    test('loginUser should set state to AsyncLoading & then AsyncData<User> when the userRepository returns a User object', () async {
+    test('userNotifier should set state to AsyncLoading & then AsyncData<User> when the userRepository returns a User object', () async {
       final userRepository = MockUserRepository();
       const String existingUserEmail = 'existing@email.com';
       final User existingUser = User(id: 1, email: existingUserEmail);
@@ -91,7 +91,7 @@ void main() {
       verify(() => userRepository.loginUser(email: any(named: 'email'))).called(1);
     });
 
-    test('loginUser should set state to AsyncLoading & then AsyncError<User > when the userRepository throws an exception', () async {
+    test('userNotifier should set state to AsyncLoading & then AsyncError<User > when the userRepository throws an exception', () async {
       final userRepository = MockUserRepository();
       const String invalidUserEmail = 'invalid@email.com';
 
@@ -132,9 +132,9 @@ void main() {
 
   });
 
-  group('logoutUser', () {
+  group('(group: logoutUser) -', () {
 
-    test('logoutUser should set state to AsyncData(null) when the state currently contains a User object', () async {
+    test('should set state to AsyncData(null) when the state currently contains a User object', () async {
       final container = createContainer();
       final User loggedInUser = User(id:1, email: 'loggedin@user.com');
 
@@ -166,7 +166,7 @@ void main() {
       verifyNoMoreInteractions(listener);
     });
 
-    test('logoutUser should not change state when there is no User stored in state', () async {
+    test('should not change state when there is no User stored in state', () async {
       final container = createContainer();
 
       // create a listener

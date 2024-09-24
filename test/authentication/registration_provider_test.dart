@@ -23,9 +23,9 @@ void main() {
     registerFallbackValue(AsyncError<User?>('some error', StackTrace.current));
   });
 
-  group('registerUser', () {
+  group('(group: registerUser) -', () {
 
-    test('registerUser  initial state is AsyncData(void)', () {
+    test('registration notifiers initial state is AsyncData(void)', () {
       // Creates a container containing all of our providers
       final container = createContainer();
 
@@ -48,7 +48,7 @@ void main() {
       verifyNoMoreInteractions(listener);
     });
 
-    test('registerUser should set state to AsyncLoading & then AsyncData<void> when the userRepository returns a User object', () async {
+    test('registration notifier should set state to AsyncLoading & then AsyncData<void> when the userRepository returns a User object', () async {
       final userRepository = MockUserRepository();
       const String newUserEmail = 'existing@email.com';
       final User newUser = User(id: 1, email: newUserEmail);
@@ -89,7 +89,7 @@ void main() {
       verify(() => userRepository.registerUser(email: any(named: 'email'))).called(1);
     });
 
-    test('registerUser should set state to AsyncLoading & then AsyncError when the userRepository throws an exception', () async {
+    test('registration notifier should set state to AsyncLoading & then AsyncError when the userRepository throws an exception', () async {
       final userRepository = MockUserRepository();
       const String existingUserEmail = 'existing@email.com';
 

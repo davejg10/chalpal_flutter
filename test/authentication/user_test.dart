@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   const String email = "an@email.com";
 
-  group('User', () {
+  group('(group: User model) -', () {
     test('toJson should return a json representation of user', () {
       int id = 1;
       Map<String, dynamic> newUserJson = {
