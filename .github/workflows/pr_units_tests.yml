@@ -41,12 +41,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-#      - name: Install project dependencies
-#        run: flutter pub get
+      - name: Install project dependencies
+        run: flutter pub get
 
       - name: Install emulator
         run: |
-          sdkmanager "platform-tools" "platforms;android-${{ env.apiLevel }}"
+          sdkmanager "platform-tools" "platforms;android-${{ env.apiLevel }}" "emulator"
           sdkmanager --install "system-images;android-${{ env.apiLevel }};${{ env.target }};${{ env.arch }}"
           sdkmanager --update
           echo "y" | sdkmanager --licenses
