@@ -8,17 +8,17 @@ on:
 
 jobs:
   pr-unit-testing:
-    runs-on: ubuntu-latest
+    runs-on: ghcr.io/cirruslabs/flutter:latest
     steps:
       - uses: actions/checkout@v4
 
 #        // run dart build runner
 
-      - name: Setup Flutter SDK
-        uses: flutter-actions/setup-flutter@v3
-        with:
-          channel: stable
-          version: 3.24.1
+#      - name: Setup Flutter SDK
+#        uses: flutter-actions/setup-flutter@v3
+#        with:
+#          channel: stable
+#          version: 3.24.1
 
       - name: Install dependencies
         run: flutter pub get
@@ -35,15 +35,15 @@ jobs:
 
   pr-integration-testing:
     needs: pr-unit-testing
-    runs-on: ubuntu-latest
+    runs-on: ghcr.io/cirruslabs/flutter:latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Flutter SDK
-        uses: flutter-actions/setup-flutter@v3
-        with:
-          channel: stable
-          version: 3.24.1
+#      - name: Setup Flutter SDK
+#        uses: flutter-actions/setup-flutter@v3
+#        with:
+#          channel: stable
+#          version: 3.24.1
 
       - name: Install dependencies
         run: flutter pub get
