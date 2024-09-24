@@ -54,13 +54,16 @@ jobs:
       - name: create avd
         run: echo "no" | avdmanager -v create avd --force --name "android_emulator" --package "system-images;android-${{ env.apiLevel }};${{ env.target }};${{ env.arch }}" --tag "${{ env.target }}" --sdcard 128M --device "${{ env.deviceType }}"
 
+      - name: list directory emulators
+        run: ls ~/.android/avd
+
       - name: list emulators
         run: |
           emulator -list-avds
 
       - name: cat emulators
         run: |    
-          sudo cat /tmp/android-unknown/emu-crash-35.1.21.db
+          sudo ls /tmp/android-unknown/emu-crash-35.1.21.db
 
       - name: run emulator
         run: |
