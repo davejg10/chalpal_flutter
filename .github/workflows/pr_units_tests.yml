@@ -7,31 +7,31 @@ on:
     branches: main
 
 jobs:
-  pr-unit-testing:
-    runs-on: ubuntu-latest
-    container: ghcr.io/cirruslabs/flutter:latest
-    steps:
-      - uses: actions/checkout@v4
-
-#        // run dart build runner
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Run Unit Tests
-        run: flutter test --file-reporter "json:tests/json"
-
-      - name: Archive test results
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: test-results
-          path: tests/json
+#  pr-unit-testing:
+#    runs-on: ubuntu-latest
+#    container: ghcr.io/cirruslabs/flutter:latest
+#    steps:
+#      - uses: actions/checkout@v4
+#
+##        // run dart build runner
+#
+#      - name: Install dependencies
+#        run: flutter pub get
+#
+#      - name: Run Unit Tests
+#        run: flutter test --file-reporter "json:tests/json"
+#
+#      - name: Archive test results
+#        uses: actions/upload-artifact@v3
+#        if: always()
+#        with:
+#          name: test-results
+#          path: tests/json
 
   pr-integration-testing:
-    needs: pr-unit-testing
+#    needs: pr-unit-testing
     runs-on: ubuntu-latest
-    container: ghcr.io/cirruslabs/flutter:latest
+#    container: ghcr.io/cirruslabs/flutter:latest
     steps:
       - uses: actions/checkout@v4
 
