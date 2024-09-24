@@ -35,8 +35,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: flutter pub get
+#      - name: Install dependencies
+#        run: flutter pub get
 
       - name: Enable KVM
         run: |
