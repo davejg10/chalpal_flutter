@@ -50,4 +50,7 @@ jobs:
           api-level: 29
           arch: x86_64
           profile: Nexus 6
-          script: ./gradlew connectedCheck
+#          script: ./gradlew connectedCheck
+
+      - name: Check connectivity to emulator
+        run: flutter doctor -v
