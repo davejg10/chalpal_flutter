@@ -82,6 +82,8 @@ jobs:
       - name: flutter test
         run: |
           ls
+          adb devices
           adb_emulator_id=$(adb devices | grep emulator | awk '{print $1}')
+          echo $adb_emulator_id
           flutter test --machine -d "$adb_emulator_id" integration_test
           
