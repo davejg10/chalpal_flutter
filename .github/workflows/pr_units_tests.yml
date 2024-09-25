@@ -60,6 +60,7 @@ jobs:
         run: |
           echo "ANDROID_SDK_ROOT=$ANDROID_HOME" >> $GITHUB_ENV
           echo "ANDROID_AVD_HOME=$HOME/.android/" >> $GITHUB_ENV
+#          echo "ANDROID_HOME=$HOME/a
 
       - name: create avd
         run: echo "no" | avdmanager -v create avd --force --name "android_emulator" --package "system-images;android-${{ env.apiLevel }};${{ env.target }};${{ env.arch }}" --tag "${{ env.target }}" --sdcard 128M --device "${{ env.deviceType }}"
@@ -74,7 +75,8 @@ jobs:
       - name: run emulator
         run: |
           nohup emulator -avd "${{ env.deviceName }}" -no-audio -no-window -no-snapstorage -no-snapshot -gpu swiftshader_indirect -no-boot-anim -no-accel -wipe-data -skip-adb-auth &
-          adb wait-for-device
+          adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
+
 
       - name: flutter doctor
         run: flutter doctor -v
