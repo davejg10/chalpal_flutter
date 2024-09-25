@@ -84,7 +84,6 @@ jobs:
 
       - name: flutter test
         run: |
-#          adb forward tcp:5037 tcp:5037
           ls
           adb devices
           adb_emulator_id=$(adb devices | grep emulator | awk '{print $1}')
